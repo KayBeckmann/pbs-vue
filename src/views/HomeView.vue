@@ -1,9 +1,13 @@
+<template>
+  <menuComponent></menuComponent>
+</template>
+
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import menuComponent from "../components/menuComponent.vue";
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style scoped lang="scss">
+h1 {
+  font-size: xx-large;
+}
+</style>
