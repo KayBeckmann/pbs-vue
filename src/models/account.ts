@@ -1,11 +1,17 @@
 export class Account {
     id: number;
-    title: string;
-    completed: boolean;
+    bank: string;
+    iban: string;
+    bic: string;
+    open: boolean;
+    show: boolean;
 
-    constructor(id:number, title:string, completed:boolean) {
+    constructor(id:number, bank:string, iban:string, bic:string, open:boolean, show:boolean) {
       this.id = id;
-      this.title = title;
-      this.completed = completed;
+      this.bank = bank;
+      this.iban = iban;
+      this.bic = bic;
+      this.open = open;
+      this.show = show;
     }
   }

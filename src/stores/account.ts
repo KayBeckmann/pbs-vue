@@ -1,18 +1,26 @@
+import { Account } from "@/models/account";
 import { defineStore } from "pinia";
 
 export const useCounterStore = defineStore({
   id: "account",
   state: () => ({
+    account: [] as Account[],
     count: 0,
-    more: "viele Weitere Optionen",
   }),
   actions: {
-    increaseCount() {
-      this.count++;
+    addAccount(newAccount: Account) {
+      this.account.push(newAccount);
     },
-    decreaseCount() {
-      if (this.count > 0) {
-        this.count--;
+    updateAccountById(id: number, updatedAccount: Partial<Account>) {
+      const index = this.account.findIndex(account => account.id === id);
+      if (index !== -1) {
+        this.account[index] = { ...this.account[index], ...updatedAccount };
+      }
+    },
+    updateAccountByIban(iban: string, updatedAccount: Partial<Account>) {
+      const index = this.account.findIndex(account => account.iban === iban);
+      if (index !== -1) {
+        this.account[index] = { ...this.account[index], ...updatedAccount };
       }
     },
   },
