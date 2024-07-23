@@ -1,7 +1,7 @@
 import { Account } from "@/models/account";
 import { defineStore } from "pinia";
 
-export const useCounterStore = defineStore({
+export const useAccountStore = defineStore({
   id: "account",
   state: () => ({
     account: [] as Account[],
