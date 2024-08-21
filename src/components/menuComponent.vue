@@ -4,11 +4,18 @@
       <h1><abbr title="Personal Bilance Software">PBS</abbr></h1>
     </div>
     <div class="right">
+      <h2>{{ useAccount.sum }}€</h2>
       <!-- <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link> -->
     </div>
   </nav>
 </template>
+
+<script setup lang="ts">
+import { useAccountStore } from "@/stores/account";
+
+const useAccount = useAccountStore();
+</script>
 
 <style scoped lang="scss">
 nav {

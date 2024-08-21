@@ -8,48 +8,48 @@ export const useAccountStore = defineStore({
     count: 0,
   }),
   actions: {
-    addAccount(account:Account) {
+    addAccount(account: Account) {
       account.id = this.account.length + 1;
       this.account.push(account);
     },
     updateAccountById(id: number, updatedAccount: Partial<Account>) {
-      const index = this.account.findIndex(account => account.id === id);
+      const index = this.account.findIndex((account) => account.id === id);
       if (index !== -1) {
         this.account[index] = { ...this.account[index], ...updatedAccount };
       }
     },
     updateAccountByIban(iban: string, updatedAccount: Partial<Account>) {
-      const index = this.account.findIndex(account => account.iban === iban);
+      const index = this.account.findIndex((account) => account.iban === iban);
       if (index !== -1) {
         this.account[index] = { ...this.account[index], ...updatedAccount };
       }
     },
     deleteAccountById(id: number) {
-      const index = this.account.findIndex(account => account.id === id);
+      const index = this.account.findIndex((account) => account.id === id);
       if (index !== -1) {
         this.account.splice(index, 1);
       }
     },
     deleteAccountByIban(iban: string) {
-      const index = this.account.findIndex(account => account.iban === iban);
+      const index = this.account.findIndex((account) => account.iban === iban);
       if (index !== -1) {
         this.account.splice(index, 1);
       }
     },
   },
   getters: {
-    oddOrEven() {
-      if (this.count % 2 === 0) {
-        return "even";
+    sum() {
+      let sum = 0;
+      for (let i = 0; i < this.account.length; i++) {
+        sum += this.account[i].balance;
       }
-      return "odd";
+      return sum;
     },
-    oddOrEvenArrow: (state) => {
-      if (state.count % 2 === 0) {
-        return "even";
-      } else {
-        return "odd";
+    length() {
+      if (this.account.length) {
+        return true;
       }
+      return false;
     },
   },
 });
