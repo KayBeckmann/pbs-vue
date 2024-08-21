@@ -1,20 +1,18 @@
 <template>
-  <div class="center">
-    <nav>
-      <div class="left">
-        <h1><abbr title="Personal Bilance Software">PBS</abbr></h1>
-      </div>
-      <div class="right">
-        <!-- <router-link to="/">Home</router-link> |
+  <nav>
+    <div class="left">
+      <h1><abbr title="Personal Bilance Software">PBS</abbr></h1>
+    </div>
+    <div class="right">
+      <!-- <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link> -->
-      </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </template>
 
 <style scoped lang="scss">
 nav {
-  --_heightStart: 90px;
+  --_heightStart: 85px;
   --_heightEnd: 70px;
   --_widthStart: 100dvw;
   --_widthEnd: clamp(18.75rem, 7.386rem + 56.82vw, 50rem);
@@ -62,12 +60,6 @@ h1 {
   animation-range-end: calc(
     100dvh + var(--_animationStartsAfter) + var(--_animationDistance)
   );
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .left {
