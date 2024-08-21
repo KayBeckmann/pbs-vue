@@ -1,35 +1,134 @@
 <template>
-  <nav>
-    <div class="left">
-      <h1>PBS</h1>
-      |
-      <div>Personal Bilance Software</div>
-    </div>
-    <div class="right">
-      <RouterLink to="/">HOME</RouterLink> |
-      <RouterLink to="/about">About</RouterLink>
-    </div>
-  </nav>
+  <div class="center">
+    <nav>
+      <div class="left">
+        <h1><abbr title="Personal Bilance Software">PBS</abbr></h1>
+      </div>
+      <div class="right">
+        <!-- <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link> -->
+      </div>
+    </nav>
+  </div>
 </template>
-
-<script setup>
-import { RouterLink } from "vue-router";
-// Your setup code here
-</script>
 
 <style scoped lang="scss">
 nav {
+  --_heightStart: 90px;
+  --_heightEnd: 70px;
+  --_widthStart: 100dvw;
+  --_widthEnd: clamp(18.75rem, 7.386rem + 56.82vw, 50rem);
+  --_borderRadius: 25px;
+  --_animationStartsAfter: 75dvh;
+  --_animationDistance: 250px;
+  --_surfaceColorStart: rgb(20, 29, 47);
+  --_surfaceColorEnd: rgba(20, 29, 47, 0.25);
+  --_textColorStart: hsl(0 10% 90%);
+  --_textColorEnd: hsl(0 10% 90%);
+
+  z-index: 999;
+  background-color: var(--_surfaceColorStart);
+  color: var(--_textColorStart);
+  width: var(--_widthStart);
+  height: var(--_heightStart);
+  position: fixed;
+  top: 0;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
-  .left,
-  .right {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
+  animation: stickyNav linear forwards;
+  backdrop-filter: blur(0.15rem);
+  animation-timeline: view();
+  animation-range-start: calc(100dvh + var(--_animationStartsAfter));
+  animation-range-end: calc(
+    100dvh + var(--_animationStartsAfter) + var(--_animationDistance)
+  );
+}
+
+a {
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  color: white;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 2.833rem + -1.78vw, 1.5rem);
+
+  animation: logoDisapear linear forwards;
+  animation-timeline: view();
+  animation-range-start: calc(100dvh + var(--_animationStartsAfter));
+  animation-range-end: calc(
+    100dvh + var(--_animationStartsAfter) + var(--_animationDistance)
+  );
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+  padding-left: 37px;
+}
+
+.right {
+  padding-right: 37px;
+  display: flex;
+  gap: 15px;
+
+  a {
+    text-decoration: none;
+    font-size: clamp(0.75rem, 0.386rem + 1.82vw, 1.75rem);
+    color: var(--_textColorStart);
+
+    &:hover {
+      color: var(--background-color-hover);
+    }
+  }
+
+  .active {
+    border-bottom: 3px solid #4b47ff;
+  }
+}
+
+.d-none {
+  display: none;
+}
+
+.coloriezed {
+  color: #4b47ff;
+}
+
+@keyframes stickyNav {
+  100% {
+    top: 1rem;
+    height: var(--_heightEnd);
+    width: var(--_widthEnd);
+    background-color: var(--_surfaceColorEnd);
+    color: var(--_textColorEnd);
+    box-shadow: 0 0 0.75rem hsl(0 0% 0% / 0.3);
+    border-radius: var(--_borderRadius);
+  }
+}
+
+@keyframes logoDisapear {
+  100% {
+    font-size: clamp(2rem, 2.333rem + -1.78vw, 1rem);
+  }
+}
+
+footer {
+  color: lightgray;
+  background-color: black;
+  width: 100dvw;
+  height: 150px;
+
+  h2 {
+    margin: 0;
+    padding: 0;
   }
 }
 </style>
