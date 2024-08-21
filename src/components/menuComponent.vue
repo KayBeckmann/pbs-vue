@@ -4,7 +4,7 @@
       <h1><abbr title="Personal Bilance Software">PBS</abbr></h1>
     </div>
     <div class="right">
-      <h2>{{ useAccount.sum }}€</h2>
+      <h2 :class="{ alert: useAccount.sum < 0 }">{{ useAccount.sum }}€</h2>
       <!-- <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link> -->
     </div>
@@ -97,8 +97,8 @@ h1 {
   display: none;
 }
 
-.coloriezed {
-  color: #4b47ff;
+.alert {
+  color: #ef0000;
 }
 
 @keyframes stickyNav {
@@ -116,18 +116,6 @@ h1 {
 @keyframes logoDisapear {
   100% {
     font-size: clamp(2rem, 2.333rem + -1.78vw, 1rem);
-  }
-}
-
-footer {
-  color: lightgray;
-  background-color: black;
-  width: 100dvw;
-  height: 150px;
-
-  h2 {
-    margin: 0;
-    padding: 0;
   }
 }
 </style>
