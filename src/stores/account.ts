@@ -9,8 +9,8 @@ export const useAccountStore = defineStore({
   }),
   actions: {
     addAccount(account: Account) {
-      account.id = this.account.length + 1;
-      this.account.push(account);
+      const newAccount = { ...account, id: this.account.length + 1 };
+      this.account.push(newAccount);
     },
     updateAccountById(id: number, updatedAccount: Partial<Account>) {
       const index = this.account.findIndex((account) => account.id === id);
@@ -41,7 +41,9 @@ export const useAccountStore = defineStore({
     sum() {
       let sum = 0;
       for (let i = 0; i < this.account.length; i++) {
-        sum += this.account[i].balance;
+        if (this.account[i].show) {
+          sum += this.account[i].balance;
+        }
       }
       return sum;
     },
