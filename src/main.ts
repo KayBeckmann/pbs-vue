@@ -2,12 +2,12 @@ import "./assets/main.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import dotenv from "dotenv";
 
 import App from "./App.vue";
 import router from "./router";
 
-dotenv.config();
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const app = createApp(App);
 
