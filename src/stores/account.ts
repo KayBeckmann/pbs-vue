@@ -1,57 +1,79 @@
-import { Account } from "@/models/account";
 import { defineStore } from "pinia";
+import { supabase } from "@/supabase";
+import { ref } from "vue";
+import { Account } from "@/models/account"; // Pfad zu deiner Account-Klasse
 
-export const useAccountStore = defineStore({
-  id: "account",
-  state: () => ({
-    account: [] as Account[],
-    count: 0,
-  }),
-  actions: {
-    addAccount(account: Account) {
-      const newAccount = { ...account, id: this.account.length + 1 };
-      this.account.push(newAccount);
-    },
-    updateAccountById(id: number, updatedAccount: Partial<Account>) {
-      const index = this.account.findIndex((account) => account.id === id);
-      if (index !== -1) {
-        this.account[index] = { ...this.account[index], ...updatedAccount };
-      }
-    },
-    updateAccountByIban(iban: string, updatedAccount: Partial<Account>) {
-      const index = this.account.findIndex((account) => account.iban === iban);
-      if (index !== -1) {
-        this.account[index] = { ...this.account[index], ...updatedAccount };
-      }
-    },
-    deleteAccountById(id: number) {
-      const index = this.account.findIndex((account) => account.id === id);
-      if (index !== -1) {
-        this.account.splice(index, 1);
-      }
-    },
-    deleteAccountByIban(iban: string) {
-      const index = this.account.findIndex((account) => account.iban === iban);
-      if (index !== -1) {
-        this.account.splice(index, 1);
-      }
-    },
-  },
-  getters: {
-    sum() {
-      let sum = 0;
-      for (let i = 0; i < this.account.length; i++) {
-        if (this.account[i].show) {
-          sum += this.account[i].balance;
-        }
-      }
-      return sum;
-    },
-    length() {
-      if (this.account.length) {
-        return true;
-      }
-      return false;
-    },
-  },
+export const useAccountStore = defineStore("account", () => {
+  const accounts = ref<Account[]>([]);
+
+  // Funktion zum Laden der Daten von Supabase
+  const fetchAccounts = async () => {
+    const { data, error } = await supabase
+      .from("accounts") // Tabellenname in Supabase
+      .select("*");
+
+    if (error) {
+      console.error("Error fetching accounts:", error);
+      return;
+    }
+
+    // Mappe die Daten auf die Account-Klasse
+    accounts.value = data.map(
+      (item: any) =>
+        new Account(
+          item.id,
+          item.bank,
+          item.iban,
+          item.bic,
+          item.balance,
+          item.open,
+          item.show
+        )
+    );
+  };
+
+  // Funktion zum Hinzufügen oder Aktualisieren eines Accounts
+  const saveAccount = async (account: Account) => {
+    const { error } = await supabase.from("accounts").upsert({
+      id: account.id,
+      bank: account.bank,
+      iban: account.iban,
+      bic: account.bic,
+      balance: account.balance,
+      open: account.open,
+      show: account.show,
+    });
+
+    if (error) {
+      console.error("Error saving account:", error);
+      return;
+    }
+
+    // Falls erfolgreich, wird die lokale Liste aktualisiert
+    const index = accounts.value.findIndex((acc) => acc.id === account.id);
+    if (index !== -1) {
+      accounts.value[index] = account;
+    } else {
+      accounts.value.push(account);
+    }
+  };
+
+  // Funktion zum Löschen eines Accounts
+  const deleteAccount = async (id: number) => {
+    const { error } = await supabase.from("accounts").delete().eq("id", id);
+
+    if (error) {
+      console.error("Error deleting account:", error);
+      return;
+    }
+
+    accounts.value = accounts.value.filter((acc) => acc.id !== id);
+  };
+
+  return {
+    accounts,
+    fetchAccounts,
+    saveAccount,
+    deleteAccount,
+  };
 });
