@@ -11,7 +11,9 @@
 import { supabase } from "@/supabase";
 import { ref, onMounted } from "vue";
 import { Account } from "@/models/account";
+import { useAccountStore } from "@/stores/account";
 
+const accountStore = useAccountStore();
 let accounts: Account[] = ref("Accounts");
 
 async function load() {
@@ -21,6 +23,14 @@ async function load() {
     console.error("Fehler beim Laden der Daten:", error);
   } else {
     accounts.value = data;
+    mapDataForPinia();
+  }
+}
+
+function mapDataForPinia(){
+  for(let i=0; i < accounts.value.length; i++){
+    let account = new Account();
+    accountStore.addAccount(accounts.value[i]);    
   }
 }
 
