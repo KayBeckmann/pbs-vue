@@ -4,6 +4,8 @@
   </div>
   <div class="content">
     <acountManagement></acountManagement>
+
+    <dashboardComponent></dashboardComponent>
   </div>
   <footerComponent></footerComponent>
 </template>
@@ -12,6 +14,7 @@
 import menuComponent from "@/components/menuComponent.vue";
 import acountManagement from "@/components/accountManagement.vue";
 import footerComponent from "@/components/footerComponent.vue";
+import dashboardComponent from "@/components/dashboardComponent.vue";
 </script>
 
 <style scoped lang="scss">
