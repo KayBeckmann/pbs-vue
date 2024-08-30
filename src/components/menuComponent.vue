@@ -5,6 +5,7 @@
     </div>
     <div class="right">
       <h2 :class="{ alert: useAccount.sum < 0 }">{{ useAccount.sum }}€</h2>
+      <button @click="logout">Logout</button>
       <!-- <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link> -->
     </div>
@@ -13,8 +14,17 @@
 
 <script setup lang="ts">
 import { useAccountStore } from "@/stores/account";
+import { supabase } from "@/supabase";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const useAccount = useAccountStore();
+
+// logout
+async function logout() {
+  const { data, error } = await supabase.auth.signOut();
+  router.push("/login");
+}
 </script>
 
 <style scoped lang="scss">

@@ -22,6 +22,17 @@
       />
     </div>
 
+    <div class="inputContainer">
+      <label for="name">Name: </label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Name"
+        v-model="name"
+      />
+    </div>
+
     <div class="buttonContainer">
       <button @click="createAccount()">Create Account</button>
       <button @click="login()">Login</button>
@@ -31,30 +42,52 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+import { supabase } from "@/supabase";
 import { ref } from "vue";
+
+const router = useRouter();
+
 // connect inputs
 let email = ref("");
 let password = ref("");
+let name = ref("");
 
 // create inputs
-function createAccount() {
-  alert("Create Account");
+async function createAccount() {
+  const { data, error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
+    data: {
+      name: name.value,
+    },
+  });
+  if (error) {
+    console.error(error);
+  } else {
+    console.log(data);
+  }
 }
 
 // login
-function login() {
-  alert("LOGIN");
+async function login() {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  });
+
+  if (error) {
+    console.error(error);
+  } else {
+    router.push("/");
+  }
 }
 
 // seeCurrentUser
-function seeCurrentUser() {
-  alert("seeCurrentUser");
-}
-
-// logout
-function logout() {
-  alert("LOGOUT");
+async function seeCurrentUser() {
+  const localUser = await supabase.auth.getSession();
+  console.log(localUser);
 }
 </script>
 
