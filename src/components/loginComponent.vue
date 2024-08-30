@@ -3,18 +3,30 @@
     <h1>Login</h1>
     <div class="inputContainer">
       <label for="email">Email: </label>
-      <input type="email" name="email" id="email" />
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="E-Mail"
+        v-model="email"
+      />
     </div>
     <div class="inputContainer">
       <label for="password">Password: </label>
-      <input type="password" name="password" id="password" />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        v-model="password"
+      />
     </div>
 
     <div class="buttonContainer">
-      <button>Create Account</button>
-      <button>Login</button>
-      <button>See user</button>
-      <button>Logout</button>
+      <button @click="createAccount()">Create Account</button>
+      <button @click="login()">Login</button>
+      <button @click="seeCurrentUser()">See user</button>
+      <button @click="logout()">Logout</button>
     </div>
   </div>
 </template>
@@ -22,14 +34,28 @@
 <script setup>
 import { ref } from "vue";
 // connect inputs
+let email = ref("");
+let password = ref("");
 
 // create inputs
+function createAccount() {
+  alert("Create Account");
+}
 
 // login
+function login() {
+  alert("LOGIN");
+}
 
 // seeCurrentUser
+function seeCurrentUser() {
+  alert("seeCurrentUser");
+}
 
 // logout
+function logout() {
+  alert("LOGOUT");
+}
 </script>
 
 <style scoped lang="scss">
@@ -58,5 +84,10 @@ import { ref } from "vue";
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  button {
+    height: 35px;
+    width: 150px;
+  }
 }
 </style>
