@@ -1,19 +1,23 @@
+import type { UUID } from "crypto";
+
 export class Account {
-  id: number;
+  id: UUID;
   bank: string;
   iban: string;
   bic: string;
   startbalance: number;
   balance: number;
+  owner: UUID;
   open: boolean;
   show: boolean;
 
   constructor(
-    id: number,
+    id: string,
     bank: string,
     iban: string,
     bic: string,
     balance: number,
+    owner: UUID,
     open: boolean = true,
     show: boolean = true
   ) {
@@ -22,6 +26,7 @@ export class Account {
     this.iban = iban;
     this.bic = bic;
     this.startbalance = balance;
+    this.owner = owner;
     this.open = open;
     this.show = show;
     this.balance = balance;
