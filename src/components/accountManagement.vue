@@ -6,7 +6,7 @@
     <input type="text" v-model="account.bic" placeholder="BIC">
     <input type="number" v-model="account.balance" placeholder="Startkapital">
   </div>
-    <button @click="addAccount" >Hinzufügen</button>
+    <button @click="addAccount">Hinzufügen</button>
   
 </template>
 
