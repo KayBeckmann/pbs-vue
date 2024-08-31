@@ -4,7 +4,7 @@
       <h1><abbr title="Personal Bilance Software">PBS</abbr></h1>
     </div>
     <div class="right">
-      <h2 :class="{ alert: useAccount.sum < 0 }">{{ useAccount.sum }}€</h2>
+      <h2 :class="{ alert: totalBalance < 0 }">{{ totalBalance }}€</h2>
       <button @click="logout">Logout</button>
       <!-- <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link> -->
@@ -13,16 +13,24 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useAccountStore } from "@/stores/account";
-import { supabase } from "@/supabase";
 import { useRouter } from "vue-router";
+import { supabase } from "@/supabase";
 
+// Zugriff auf den Router
 const router = useRouter();
-const useAccount = useAccountStore();
+
+// Store initialisieren
+const accountStore = useAccountStore();
+
+// Zugriff auf die Summe
+const totalBalance = computed(() => accountStore.sum());
 
 // logout
 async function logout() {
   const { data, error } = await supabase.auth.signOut();
+  accountStore.reset();
   router.push("/login");
 }
 </script>
